@@ -50,6 +50,11 @@ export function DemoForm() {
   // Reviews
   const [reviews, setReviews] = useState<Review[]>([]);
 
+  // Colors
+  const [colorPrimary, setColorPrimary] = useState("#102a43");
+  const [colorAccent, setColorAccent] = useState("#f59e0b");
+  const [colorHighlight, setColorHighlight] = useState("#f59e0b");
+
   // Submit state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -133,6 +138,11 @@ export function DemoForm() {
       reviews,
       credentials: Array.from(selectedCredentials),
       suburbs,
+      colors: {
+        primary: colorPrimary,
+        accent: colorAccent,
+        highlight: colorHighlight,
+      },
     };
 
     setLoading(true);
@@ -388,7 +398,52 @@ export function DemoForm() {
         <ReviewParser reviews={reviews} onChange={setReviews} />
       </SectionCard>
 
-      {/* Section 6: Generate */}
+      {/* Section 6: Branding Colors */}
+      <SectionCard title="Branding Colors">
+        <div className="space-y-4">
+          {[
+            {
+              label: "Primary",
+              desc: "Main background color (hero, nav)",
+              value: colorPrimary,
+              onChange: setColorPrimary,
+            },
+            {
+              label: "Accent",
+              desc: "Buttons and highlights",
+              value: colorAccent,
+              onChange: setColorAccent,
+            },
+            {
+              label: "Highlight",
+              desc: "Colored words in headings",
+              value: colorHighlight,
+              onChange: setColorHighlight,
+            },
+          ].map(({ label, desc, value, onChange }) => (
+            <div key={label} className="flex items-center gap-4">
+              <input
+                type="color"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="color-swatch-input"
+              />
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="w-28 bg-transparent border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] px-3 py-1.5 text-xs focus:border-amber-500 focus:outline-none"
+              />
+              <div>
+                <p className="font-[family-name:var(--font-jetbrains)] text-[0.7rem] text-[#e8e8ed]">{label}</p>
+                <p className="font-[family-name:var(--font-jetbrains)] text-[0.65rem] text-[#6b6b7b]">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+
+      {/* Section 7: Generate */}
       <div className="pt-2">
         {error && (
           <p className="text-red-500 font-[family-name:var(--font-jetbrains)] text-xs uppercase tracking-wider mb-4 border border-red-500/30 border-l-[3px] border-l-red-500 px-4 py-2">

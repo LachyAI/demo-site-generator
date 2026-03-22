@@ -70,6 +70,8 @@ function ServiceCard({ service }: { service: DemoConfig["services"][number] }) {
 }
 
 export function Services({ config }: { config: DemoConfig }) {
+  const highlight = config.colors?.highlight || "#f59e0b"
+
   return (
     <section id="services" className="py-16 md:py-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -79,7 +81,8 @@ export function Services({ config }: { config: DemoConfig }) {
             What We Do
           </p>
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-navy-900">
-            Professional Services
+            Professional{" "}
+            <span style={{ color: highlight }}>Services</span>
           </h2>
         </div>
 

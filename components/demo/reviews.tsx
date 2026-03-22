@@ -24,14 +24,12 @@ function ReviewCard({ review }: { review: DemoConfig["reviews"][number] }) {
 
       {/* Reviewer */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center text-navy-700 font-bold text-sm shrink-0">
-          {review.name.charAt(0).toUpperCase()}
+        {/* Google G avatar */}
+        <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0">
+          <span className="text-blue-500 font-bold text-lg leading-none">G</span>
         </div>
         <div>
           <p className="font-semibold text-navy-900 text-sm">{review.name}</p>
-          {review.category && (
-            <p className="text-xs text-slate-500">{review.category}</p>
-          )}
         </div>
       </div>
     </div>
@@ -39,6 +37,8 @@ function ReviewCard({ review }: { review: DemoConfig["reviews"][number] }) {
 }
 
 export function Reviews({ config }: { config: DemoConfig }) {
+  const highlight = config.colors?.highlight || "#f59e0b"
+
   return (
     <section id="reviews" className="py-16 md:py-24 bg-slate-50">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
@@ -48,7 +48,8 @@ export function Reviews({ config }: { config: DemoConfig }) {
             Reviews
           </p>
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-navy-900">
-            Trusted by Your Neighbours in {config.suburb}
+            Trusted by Your Neighbours in{" "}
+            <span style={{ color: highlight }}>{config.suburb}</span>
           </h2>
         </div>
 

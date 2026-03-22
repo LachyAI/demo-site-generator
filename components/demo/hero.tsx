@@ -7,8 +7,15 @@ import { DemoConfig } from "@/lib/types"
 export function Hero({ config }: { config: DemoConfig }) {
   const [imgError, setImgError] = useState(false)
 
+  const primary = config.colors?.primary || "#102a43"
+  const accent = config.colors?.accent || "#f59e0b"
+  const highlight = config.colors?.highlight || "#f59e0b"
+
   return (
-    <section className="relative bg-navy-900 text-white py-16 md:py-24 overflow-hidden">
+    <section
+      className="relative text-white py-16 md:py-24 overflow-hidden"
+      style={{ backgroundColor: primary }}
+    >
       {/* Decorative bg */}
       <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-navy-800/50 rounded-full blur-3xl" />
 
@@ -17,13 +24,17 @@ export function Hero({ config }: { config: DemoConfig }) {
           {/* Left column — text content */}
           <div className="text-left">
             {/* Trust pill */}
-            <span className="inline-block px-4 py-1.5 bg-navy-700 text-accent-amber text-xs font-bold rounded-full mb-6 uppercase tracking-wider">
+            <span
+              className="inline-block px-4 py-1.5 text-xs font-bold rounded-full mb-6 uppercase tracking-wider"
+              style={{ backgroundColor: "rgba(255,255,255,0.1)", color: accent }}
+            >
               Trusted Local Handyman
             </span>
 
             {/* H1 */}
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-              Reliable Handyman in {config.suburb}
+              Reliable Handyman in{" "}
+              <span style={{ color: highlight }}>{config.suburb}</span>
             </h1>
 
             {/* Subtitle */}
@@ -35,7 +46,8 @@ export function Hero({ config }: { config: DemoConfig }) {
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <a
                 href="#quote"
-                className="bg-accent-amber hover:bg-accent-amber-hover text-white font-bold py-3 px-8 rounded-full text-lg transition-colors text-center"
+                style={{ backgroundColor: accent }}
+                className="text-white font-bold py-3 px-8 rounded-full text-lg transition-opacity hover:opacity-90 text-center"
               >
                 Get a Free Quote
               </a>

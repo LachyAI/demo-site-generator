@@ -26,6 +26,11 @@ export const demoConfigSchema = z.object({
   credentials: z.array(z.string()),
   suburbs: z.array(z.string()),
   createdAt: z.string().optional(),
+  colors: z.object({
+    primary: z.string().default("#102a43"),
+    accent: z.string().default("#f59e0b"),
+    highlight: z.string().default("#f59e0b"),
+  }).optional(),
 });
 
 export type Review = z.infer<typeof reviewSchema>;

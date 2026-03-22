@@ -9,12 +9,12 @@ import { Services } from "@/components/demo/services";
 import { HowItWorks } from "@/components/demo/how-it-works";
 import { Gallery } from "@/components/demo/gallery";
 import { Reviews } from "@/components/demo/reviews";
-import { About } from "@/components/demo/about";
 import { ServiceAreas } from "@/components/demo/service-areas";
 import { QuoteForm } from "@/components/demo/quote-form";
 import { Footer } from "@/components/demo/footer";
 import { ChatWidget } from "@/components/demo/chat-widget";
 import { MobileStickyBar } from "@/components/demo/mobile-sticky-bar";
+import { StickyCallButton } from "@/components/demo/sticky-call-button";
 import { AnimateOnScroll } from "@/components/demo/animate-on-scroll";
 
 export async function generateMetadata({
@@ -55,16 +55,13 @@ export default async function DemoPage({
           <Services config={config} />
         </AnimateOnScroll>
         <AnimateOnScroll>
-          <HowItWorks />
+          <HowItWorks config={config} />
         </AnimateOnScroll>
         <AnimateOnScroll>
           <Gallery config={config} />
         </AnimateOnScroll>
         <AnimateOnScroll>
           <Reviews config={config} />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <About config={config} />
         </AnimateOnScroll>
         <AnimateOnScroll>
           <ServiceAreas config={config} />
@@ -76,6 +73,7 @@ export default async function DemoPage({
       <Footer config={config} />
       <ChatWidget config={config} />
       <MobileStickyBar config={config} />
+      <StickyCallButton config={config} />
     </div>
   );
 }

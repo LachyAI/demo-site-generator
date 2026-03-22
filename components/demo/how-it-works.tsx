@@ -1,4 +1,8 @@
-export function HowItWorks() {
+import { DemoConfig } from "@/lib/types"
+
+export function HowItWorks({ config }: { config?: DemoConfig }) {
+  const highlight = config?.colors?.highlight || "#f59e0b"
+
   const steps = [
     {
       number: "1",
@@ -29,7 +33,8 @@ export function HowItWorks() {
             How It Works
           </p>
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-navy-900">
-            Simple Process, Quality Results
+            Simple Process,{" "}
+            <span style={{ color: highlight }}>Quality</span> Results
           </h2>
         </div>
 
