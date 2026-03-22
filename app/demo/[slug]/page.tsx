@@ -16,6 +16,7 @@ import { ChatWidget } from "@/components/demo/chat-widget";
 import { MobileStickyBar } from "@/components/demo/mobile-sticky-bar";
 import { StickyCallButton } from "@/components/demo/sticky-call-button";
 import { AnimateOnScroll } from "@/components/demo/animate-on-scroll";
+import { About } from "@/components/demo/about";
 
 export async function generateMetadata({
   params,
@@ -51,6 +52,9 @@ export default async function DemoPage({
         <Hero config={config} />
         <TrustBar config={config} />
         <Stats />
+        <AnimateOnScroll>
+          <About config={config} />
+        </AnimateOnScroll>
         <AnimateOnScroll>
           <Services config={config} />
         </AnimateOnScroll>

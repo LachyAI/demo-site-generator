@@ -31,6 +31,13 @@ export const demoConfigSchema = z.object({
     accent: z.string().default("#f59e0b"),
     highlight: z.string().default("#f59e0b"),
   }).optional(),
+  about: z.object({
+    bio: z.string().optional(),
+    hometown: z.string().optional(),
+    experience: z.string().optional(),
+    education: z.string().optional(),
+    passion: z.string().optional(),
+  }).optional(),
 });
 
 export type Review = z.infer<typeof reviewSchema>;

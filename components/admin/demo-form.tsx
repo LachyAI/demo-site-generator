@@ -50,6 +50,13 @@ export function DemoForm() {
   // Reviews
   const [reviews, setReviews] = useState<Review[]>([]);
 
+  // About / Bio
+  const [aboutBio, setAboutBio] = useState("");
+  const [aboutHometown, setAboutHometown] = useState("");
+  const [aboutExperience, setAboutExperience] = useState("");
+  const [aboutEducation, setAboutEducation] = useState("");
+  const [aboutPassion, setAboutPassion] = useState("");
+
   // Colors
   const [colorPrimary, setColorPrimary] = useState("#102a43");
   const [colorAccent, setColorAccent] = useState("#f59e0b");
@@ -128,6 +135,15 @@ export function DemoForm() {
       description: serviceDescriptions[s.id] || s.description,
     }));
 
+    const aboutData = {
+      bio: aboutBio.trim() || undefined,
+      hometown: aboutHometown.trim() || undefined,
+      experience: aboutExperience.trim() || undefined,
+      education: aboutEducation.trim() || undefined,
+      passion: aboutPassion.trim() || undefined,
+    };
+    const hasAbout = Object.values(aboutData).some(Boolean);
+
     const config = {
       businessName: businessName.trim(),
       ownerName: ownerName.trim() || undefined,
@@ -143,6 +159,7 @@ export function DemoForm() {
         accent: colorAccent,
         highlight: colorHighlight,
       },
+      ...(hasAbout ? { about: aboutData } : {}),
     };
 
     setLoading(true);
@@ -349,7 +366,67 @@ export function DemoForm() {
         </div>
       </SectionCard>
 
-      {/* Section 4: Service Suburbs */}
+      {/* Section 4: About / Bio */}
+      <SectionCard title="About / Bio (Optional)">
+        <div className="space-y-4">
+          <div>
+            <label className={labelClass}>Bio</label>
+            <textarea
+              value={aboutBio}
+              onChange={(e) => setAboutBio(e.target.value)}
+              className={`${inputClass} min-h-[80px] resize-y`}
+              placeholder="I started fixing things when I was a kid..."
+            />
+            <p className="font-[family-name:var(--font-jetbrains)] text-[0.65rem] text-[#6b6b7b] mt-1">
+              Short bio paragraph about the owner
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass}>Hometown</label>
+              <input
+                type="text"
+                value={aboutHometown}
+                onChange={(e) => setAboutHometown(e.target.value)}
+                className={inputClass}
+                placeholder="Born and raised in Brisbane"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Experience</label>
+              <input
+                type="text"
+                value={aboutExperience}
+                onChange={(e) => setAboutExperience(e.target.value)}
+                className={inputClass}
+                placeholder="15+ years in residential repairs"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Education</label>
+              <input
+                type="text"
+                value={aboutEducation}
+                onChange={(e) => setAboutEducation(e.target.value)}
+                className={inputClass}
+                placeholder="Cert III Carpentry, Licensed Builder"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Passion</label>
+              <input
+                type="text"
+                value={aboutPassion}
+                onChange={(e) => setAboutPassion(e.target.value)}
+                className={inputClass}
+                placeholder="I love turning a house into a home people are proud of"
+              />
+            </div>
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* Section 5: Service Suburbs */}
       <SectionCard title="Service Suburbs">
         <div className="space-y-3">
           <div className="flex gap-2">
