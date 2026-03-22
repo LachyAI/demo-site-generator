@@ -78,12 +78,12 @@ export function Hero({ config }: { config: DemoConfig }) {
 
           {/* Right column — hero image (mobile: above text) */}
           <div className="order-first lg:order-last">
-            <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-square">
+            <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[3/4]">
               {!imgError ? (
                 <img
                   src="https://cdn.opscorescale.com/demo-images/hero-1.jpg"
                   alt="Professional handyman at work"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-[center_30%]"
                   onError={() => setImgError(true)}
                 />
               ) : (
