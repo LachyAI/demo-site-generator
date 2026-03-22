@@ -14,7 +14,7 @@ export function Footer({ config }: { config: DemoConfig }) {
                 <img
                   src={config.logoUrl}
                   alt={config.businessName}
-                  className="h-9 w-9 object-contain brightness-0 invert"
+                  className="h-9 w-9 object-contain"
                 />
               )}
               <h3 className="font-heading font-bold text-xl text-white">
