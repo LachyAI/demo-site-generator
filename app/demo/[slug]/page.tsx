@@ -51,7 +51,7 @@ export default async function DemoPage({
       <main className="pt-[72px]">
         <Hero config={config} />
         <TrustBar config={config} />
-        <Stats />
+        <Stats config={config} />
         <AnimateOnScroll>
           <About config={config} />
         </AnimateOnScroll>

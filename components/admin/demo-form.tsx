@@ -57,6 +57,14 @@ export function DemoForm() {
   const [aboutEducation, setAboutEducation] = useState("");
   const [aboutPassion, setAboutPassion] = useState("");
 
+  // Logo
+  const [logoUrl, setLogoUrl] = useState("");
+
+  // Stats
+  const [statsJobs, setStatsJobs] = useState("500");
+  const [statsClients, setStatsClients] = useState("200");
+  const [statsRating, setStatsRating] = useState("4.9");
+
   // Colors
   const [colorPrimary, setColorPrimary] = useState("#102a43");
   const [colorAccent, setColorAccent] = useState("#f59e0b");
@@ -154,6 +162,12 @@ export function DemoForm() {
       reviews,
       credentials: Array.from(selectedCredentials),
       suburbs,
+      ...(logoUrl.trim() ? { logoUrl: logoUrl.trim() } : {}),
+      stats: {
+        jobsCompleted: parseInt(statsJobs) || 500,
+        happyClients: parseInt(statsClients) || 200,
+        googleRating: Math.round(parseFloat(statsRating) * 10) || 49,
+      },
       colors: {
         primary: colorPrimary,
         accent: colorAccent,
@@ -291,6 +305,57 @@ export function DemoForm() {
               className={inputClass}
               placeholder="e.g. Brisbane"
             />
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* Logo & Stats */}
+      <SectionCard title="Logo & Stats">
+        <div className="space-y-4">
+          <div>
+            <label className={labelClass}>Logo URL (optional)</label>
+            <input
+              type="url"
+              value={logoUrl}
+              onChange={(e) => setLogoUrl(e.target.value)}
+              className={inputClass}
+              placeholder="https://example.com/logo.png"
+            />
+            <p className="text-[#3a3a4e] text-[0.6rem] font-[family-name:var(--font-jetbrains)] mt-1">
+              Paste a URL to the business logo. Leave empty to show business name as text.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className={labelClass}>Jobs Completed</label>
+              <input
+                type="number"
+                value={statsJobs}
+                onChange={(e) => setStatsJobs(e.target.value)}
+                className={inputClass}
+                placeholder="500"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Happy Clients</label>
+              <input
+                type="number"
+                value={statsClients}
+                onChange={(e) => setStatsClients(e.target.value)}
+                className={inputClass}
+                placeholder="200"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Google Rating</label>
+              <input
+                type="text"
+                value={statsRating}
+                onChange={(e) => setStatsRating(e.target.value)}
+                className={inputClass}
+                placeholder="4.9"
+              />
+            </div>
           </div>
         </div>
       </SectionCard>

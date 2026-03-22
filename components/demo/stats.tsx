@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { DemoConfig } from "@/lib/types"
 
 function Counter({
   end,
@@ -63,14 +64,18 @@ function Counter({
   )
 }
 
-export function Stats() {
+export function Stats({ config }: { config: DemoConfig }) {
+  const jobs = config.stats?.jobsCompleted ?? 500
+  const clients = config.stats?.happyClients ?? 200
+  const rating = config.stats?.googleRating ?? 49
+
   return (
     <section className="py-12 md:py-16 bg-white border-y border-slate-100">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-3 gap-8">
-          <Counter end={500} suffix="+" label="Jobs Completed" />
-          <Counter end={200} suffix="+" label="Happy Clients" />
-          <Counter end={49} suffix="" label="★ Google Rating" isDecimal />
+          <Counter end={jobs} suffix="+" label="Jobs Completed" />
+          <Counter end={clients} suffix="+" label="Happy Clients" />
+          <Counter end={rating} suffix="" label="★ Google Rating" isDecimal />
         </div>
       </div>
     </section>

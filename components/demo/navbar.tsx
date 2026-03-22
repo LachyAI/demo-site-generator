@@ -36,9 +36,17 @@ export function Navbar({ config }: { config: DemoConfig }) {
     >
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         {/* Logo */}
-        <span className="font-heading font-bold text-xl text-navy-900">
-          {config.businessName}
-        </span>
+        {config.logoUrl ? (
+          <img
+            src={config.logoUrl}
+            alt={config.businessName}
+            className="h-10 max-w-[200px] object-contain"
+          />
+        ) : (
+          <span className="font-heading font-bold text-xl text-navy-900">
+            {config.businessName}
+          </span>
+        )}
 
         {/* Desktop nav links */}
         <div className="hidden md:flex gap-8">

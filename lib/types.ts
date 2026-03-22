@@ -31,6 +31,12 @@ export const demoConfigSchema = z.object({
     accent: z.string().default("#f59e0b"),
     highlight: z.string().default("#f59e0b"),
   }).optional(),
+  logoUrl: z.string().optional(),
+  stats: z.object({
+    jobsCompleted: z.number().default(500),
+    happyClients: z.number().default(200),
+    googleRating: z.number().default(49),
+  }).optional(),
   about: z.object({
     bio: z.string().optional(),
     hometown: z.string().optional(),

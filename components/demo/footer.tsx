@@ -9,9 +9,17 @@ export function Footer({ config }: { config: DemoConfig }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Col 1: Business info */}
           <div>
-            <h3 className="font-heading font-bold text-xl text-white mb-3">
-              {config.businessName}
-            </h3>
+            {config.logoUrl ? (
+              <img
+                src={config.logoUrl}
+                alt={config.businessName}
+                className="h-10 max-w-[200px] object-contain brightness-0 invert mb-3"
+              />
+            ) : (
+              <h3 className="font-heading font-bold text-xl text-white mb-3">
+                {config.businessName}
+              </h3>
+            )}
             <p className="text-navy-400 text-sm leading-relaxed">
               {config.tagline ||
                 `Reliable handyman services across ${config.serviceArea}. Quality work, clear pricing, no surprises.`}
