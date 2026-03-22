@@ -63,7 +63,7 @@ export function Navbar({ config }: { config: DemoConfig }) {
           </a>
           <a
             href="#quote"
-            className="bg-accent-amber hover:bg-accent-amber-hover text-white rounded-lg px-4 py-2 text-sm font-semibold transition-colors"
+            className="bg-accent-amber hover:bg-accent-amber-hover text-white rounded-full px-4 py-2 text-sm font-semibold transition-colors"
           >
             Get a Quote
           </a>

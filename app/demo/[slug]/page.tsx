@@ -4,6 +4,7 @@ import { getDemo } from "@/lib/blob";
 import { Navbar } from "@/components/demo/navbar";
 import { Hero } from "@/components/demo/hero";
 import { TrustBar } from "@/components/demo/trust-bar";
+import { Stats } from "@/components/demo/stats";
 import { Services } from "@/components/demo/services";
 import { HowItWorks } from "@/components/demo/how-it-works";
 import { Gallery } from "@/components/demo/gallery";
@@ -14,6 +15,7 @@ import { QuoteForm } from "@/components/demo/quote-form";
 import { Footer } from "@/components/demo/footer";
 import { ChatWidget } from "@/components/demo/chat-widget";
 import { MobileStickyBar } from "@/components/demo/mobile-sticky-bar";
+import { AnimateOnScroll } from "@/components/demo/animate-on-scroll";
 
 export async function generateMetadata({
   params,
@@ -48,13 +50,28 @@ export default async function DemoPage({
       <main className="pt-[72px]">
         <Hero config={config} />
         <TrustBar config={config} />
-        <Services config={config} />
-        <HowItWorks />
-        <Gallery config={config} />
-        <Reviews config={config} />
-        <About config={config} />
-        <ServiceAreas config={config} />
-        <QuoteForm config={config} />
+        <Stats />
+        <AnimateOnScroll>
+          <Services config={config} />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <HowItWorks />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <Gallery config={config} />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <Reviews config={config} />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <About config={config} />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <ServiceAreas config={config} />
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <QuoteForm config={config} />
+        </AnimateOnScroll>
       </main>
       <Footer config={config} />
       <ChatWidget config={config} />

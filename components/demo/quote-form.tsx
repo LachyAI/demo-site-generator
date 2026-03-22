@@ -185,7 +185,7 @@ export function QuoteForm({ config }: { config: DemoConfig }) {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-accent-amber hover:bg-accent-amber-hover text-white font-bold py-3 rounded-lg text-lg transition-colors"
+              className="w-full bg-accent-amber hover:bg-accent-amber-hover text-white font-bold py-3 rounded-full text-lg transition-colors"
             >
               Send Quote Request
             </button>
