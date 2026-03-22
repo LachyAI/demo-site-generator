@@ -1,5 +1,6 @@
 "use client"
 
+import { PRESET_SERVICES } from "@/lib/defaults"
 import {
   Hammer,
   PaintBucket,
@@ -69,6 +70,13 @@ function ServiceCard({ service }: { service: DemoConfig["services"][number] }) {
   )
 }
 
+function padToSix(services: DemoConfig["services"]): DemoConfig["services"] {
+  if (services.length >= 6) return services.slice(0, 6)
+  const usedIds = new Set(services.map((s) => s.id))
+  const fillers = PRESET_SERVICES.filter((s) => !usedIds.has(s.id))
+  return [...services, ...fillers].slice(0, 6)
+}
+
 export function Services({ config }: { config: DemoConfig }) {
   const highlight = config.colors?.highlight || "#f59e0b"
 
@@ -86,9 +94,9 @@ export function Services({ config }: { config: DemoConfig }) {
           </h2>
         </div>
 
-        {/* Grid */}
+        {/* Grid — always 6 cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {config.services.map((service) => (
+          {padToSix(config.services).map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}
         </div>

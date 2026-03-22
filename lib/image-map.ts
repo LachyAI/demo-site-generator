@@ -17,14 +17,32 @@ export const SERVICE_IMAGES: Record<string, string[]> = {
 
 export function getGalleryImages(serviceIds: string[]): { src: string; caption: string }[] {
   const images: { src: string; caption: string }[] = [];
+  const usedIds = new Set<string>();
+
+  // First pass: use second image (index 1) from selected services
   for (const id of serviceIds) {
     const srcs = SERVICE_IMAGES[id] || [];
     const serviceName = id.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-    // Use second image (index 1) for gallery — first image is used by service cards
     if (srcs[1]) {
       images.push({ src: srcs[1], caption: serviceName });
+      usedIds.add(id);
     }
   }
+
+  // Pad to 6: pull second images from other service categories
+  if (images.length < 6) {
+    const allIds = Object.keys(SERVICE_IMAGES);
+    for (const id of allIds) {
+      if (images.length >= 6) break;
+      if (usedIds.has(id)) continue;
+      const srcs = SERVICE_IMAGES[id];
+      if (srcs?.[1]) {
+        const serviceName = id.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+        images.push({ src: srcs[1], caption: serviceName });
+      }
+    }
+  }
+
   return images.slice(0, 6);
 }
 
