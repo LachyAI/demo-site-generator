@@ -17,12 +17,18 @@ export async function saveDemo(config: DemoConfig): Promise<string> {
 
 export async function getDemo(slug: string): Promise<DemoConfig | null> {
   try {
-    const { blobs } = await list({ prefix: `${BLOB_PREFIX}${slug}.json` });
-    if (blobs.length === 0) return null;
-    const response = await fetch(blobs[0].url);
+    // List all demos and find by slug (more reliable than prefix matching)
+    const { blobs } = await list({ prefix: BLOB_PREFIX });
+    const target = blobs.find(
+      (b) => b.pathname === `${BLOB_PREFIX}${slug}.json`
+    );
+    if (!target) return null;
+    const response = await fetch(target.url, { cache: "no-store" });
+    if (!response.ok) return null;
     const data = await response.json();
     return demoConfigSchema.parse(data);
-  } catch {
+  } catch (e) {
+    console.error("getDemo error:", e);
     return null;
   }
 }
