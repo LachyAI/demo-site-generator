@@ -78,7 +78,7 @@ export function Hero({ config }: { config: DemoConfig }) {
 
           {/* Right column — hero image (mobile: above text) */}
           <div className="order-first lg:order-last">
-            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-h-[280px] lg:max-h-[500px]">
+            <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[3/4] lg:max-h-[500px]">
               {!imgError ? (
                 <img
                   src="https://cdn.opscorescale.com/demo-images/hero-1.jpg"
