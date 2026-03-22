@@ -20,9 +20,10 @@ export function getGalleryImages(serviceIds: string[]): { src: string; caption: 
   for (const id of serviceIds) {
     const srcs = SERVICE_IMAGES[id] || [];
     const serviceName = id.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-    srcs.forEach((src, i) => {
-      images.push({ src, caption: `${serviceName} — Project ${i + 1}` });
-    });
+    // Use second image (index 1) for gallery — first image is used by service cards
+    if (srcs[1]) {
+      images.push({ src: srcs[1], caption: serviceName });
+    }
   }
   return images.slice(0, 6);
 }
