@@ -18,7 +18,6 @@ function parseReviews(raw: string): Review[] {
 
     const name = lines[0];
 
-    // Try to extract star rating from second line or whole block
     let rating = 5;
     let textStart = 1;
 
@@ -28,7 +27,6 @@ function parseReviews(raw: string): Review[] {
       rating = starCount;
       textStart = 2;
     } else {
-      // Look for "5 stars", "4/5", "5.0", "4 out of 5"
       const numMatch = starLine.match(/(\d)[\/\s]?(?:out of\s*)?(?:\d\s*)?(?:stars?|\/5)?/i);
       if (numMatch) {
         const n = parseInt(numMatch[1]);
@@ -48,6 +46,12 @@ function parseReviews(raw: string): Review[] {
   return parsed;
 }
 
+const reviewInputClass =
+  "w-full bg-transparent border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] px-3 py-1.5 text-sm focus:border-amber-500 focus:outline-none";
+
+const reviewLabelClass =
+  "block font-[family-name:var(--font-jetbrains)] text-[0.65rem] uppercase tracking-[0.1em] text-[#6b6b7b] mb-1";
+
 function ReviewCard({
   review,
   index,
@@ -60,23 +64,23 @@ function ReviewCard({
   onRemove: () => void;
 }) {
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 space-y-3">
+    <div className="bg-[#0a0a0f] border border-[#1e1e2e] p-4 space-y-3">
       <div className="flex gap-3">
         <div className="flex-1">
-          <label className="block text-xs text-slate-400 mb-1">Name</label>
+          <label className={reviewLabelClass}>Name</label>
           <input
             type="text"
             value={review.name}
             onChange={(e) => onChange({ ...review, name: e.target.value })}
-            className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-1.5 text-sm outline-none focus:border-amber-500"
+            className={reviewInputClass}
           />
         </div>
         <div className="w-24">
-          <label className="block text-xs text-slate-400 mb-1">Rating</label>
+          <label className={reviewLabelClass}>Rating</label>
           <select
             value={review.rating}
             onChange={(e) => onChange({ ...review, rating: parseInt(e.target.value) })}
-            className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-2 py-1.5 text-sm outline-none focus:border-amber-500"
+            className="w-full bg-[#12121a] border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] px-2 py-1.5 text-sm focus:border-amber-500 focus:outline-none"
           >
             {[5, 4, 3, 2, 1].map((n) => (
               <option key={n} value={n}>
@@ -88,18 +92,18 @@ function ReviewCard({
         <button
           type="button"
           onClick={onRemove}
-          className="self-end text-slate-500 hover:text-red-400 text-sm px-2 py-1.5 transition-colors"
+          className="self-end font-[family-name:var(--font-jetbrains)] text-[#6b6b7b] hover:text-red-500 text-xs uppercase tracking-wider px-2 py-1.5 transition-colors"
         >
           Remove
         </button>
       </div>
       <div>
-        <label className="block text-xs text-slate-400 mb-1">Review Text</label>
+        <label className={reviewLabelClass}>Review Text</label>
         <textarea
           value={review.text}
           onChange={(e) => onChange({ ...review, text: e.target.value })}
           rows={3}
-          className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm outline-none focus:border-amber-500 resize-none"
+          className="w-full bg-transparent border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] px-3 py-2 text-sm focus:border-amber-500 focus:outline-none resize-none"
         />
       </div>
     </div>
@@ -139,7 +143,7 @@ export function ReviewParser({ reviews, onChange }: ReviewParserProps) {
           onChange={(e) => setRaw(e.target.value)}
           rows={6}
           placeholder={`Paste Google reviews here...\n\nFormat:\nJohn Smith\n★★★★★\nGreat work on our fence...`}
-          className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-3 text-sm outline-none focus:border-amber-500 resize-none placeholder-slate-500"
+          className="w-full bg-transparent border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] px-4 py-3 text-sm focus:border-amber-500 focus:outline-none resize-none placeholder-[#3a3a4e]"
         />
       </div>
 
@@ -148,22 +152,24 @@ export function ReviewParser({ reviews, onChange }: ReviewParserProps) {
           type="button"
           onClick={handleParse}
           disabled={!raw.trim()}
-          className="bg-slate-700 hover:bg-slate-600 disabled:opacity-40 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+          className="border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] text-xs uppercase tracking-wider px-4 py-2 hover:border-amber-500 hover:text-amber-500 disabled:opacity-40 transition-colors"
         >
           Parse Reviews
         </button>
         <button
           type="button"
           onClick={handleAddManual}
-          className="border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white text-sm px-4 py-2 rounded-lg transition-colors"
+          className="border border-[#1e1e2e] text-[#6b6b7b] font-[family-name:var(--font-jetbrains)] text-xs uppercase tracking-wider px-4 py-2 hover:border-[#2e2e3e] hover:text-[#e8e8ed] transition-colors"
         >
-          Add Review Manually
+          Add Manually
         </button>
       </div>
 
       {reviews.length > 0 && (
         <div className="space-y-3">
-          <p className="text-slate-400 text-sm">{reviews.length} review{reviews.length !== 1 ? "s" : ""}</p>
+          <p className="font-[family-name:var(--font-jetbrains)] text-[0.65rem] uppercase tracking-[0.1em] text-[#6b6b7b]">
+            {reviews.length} review{reviews.length !== 1 ? "s" : ""}
+          </p>
           {reviews.map((review, i) => (
             <ReviewCard
               key={i}

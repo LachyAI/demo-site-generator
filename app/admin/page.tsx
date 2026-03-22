@@ -17,8 +17,10 @@ export default function AdminPage() {
 
   if (checking) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <div className="text-slate-500 text-sm">Loading...</div>
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <p className="font-[family-name:var(--font-jetbrains)] text-[#6b6b7b] text-xs uppercase tracking-wider">
+          Loading...
+        </p>
       </div>
     );
   }
@@ -28,51 +30,44 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="dark">
-      <div className="min-h-screen bg-background text-foreground">
-        {/* Header */}
-        <header className="border-b border-border p-6">
-          <div className="max-w-5xl mx-auto flex items-center justify-between">
-            <div>
-              <h1 className="font-heading text-2xl font-bold text-foreground">
-                Demo Site Generator
-              </h1>
-              <p className="text-muted-foreground text-sm mt-0.5">
-                Create live demo websites for prospects
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                sessionStorage.removeItem("admin_authenticated");
-                setAuthenticated(false);
-              }}
-              className="text-slate-400 hover:text-slate-300 text-sm border border-slate-700 hover:border-slate-600 px-3 py-1.5 rounded-lg transition-colors"
-            >
-              Lock
-            </button>
-          </div>
-        </header>
+    <div className="bg-[#0a0a0f] min-h-screen">
+      {/* Header */}
+      <header className="border-b border-[#1e1e2e] p-6">
+        <div className="max-w-[1200px] mx-auto flex items-center justify-between">
+          <p className="font-[family-name:var(--font-jetbrains)] text-xs uppercase tracking-[0.15em] text-[#6b6b7b]">
+            Demo Site Generator
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              sessionStorage.removeItem("admin_authenticated");
+              setAuthenticated(false);
+            }}
+            className="font-[family-name:var(--font-jetbrains)] text-[#6b6b7b] hover:text-amber-500 text-xs uppercase tracking-wider border border-[#1e1e2e] hover:border-amber-500/50 px-3 py-1.5 transition-colors"
+          >
+            Lock
+          </button>
+        </div>
+      </header>
 
-        {/* Body */}
-        <main className="max-w-5xl mx-auto p-6 space-y-10">
-          {/* Create Demo */}
-          <section>
-            <DemoForm />
-          </section>
+      {/* Body */}
+      <main className="max-w-[1200px] mx-auto p-6 space-y-10">
+        {/* Create Demo */}
+        <section>
+          <DemoForm />
+        </section>
 
-          {/* Separator */}
-          <div className="border-t border-border" />
+        {/* Separator */}
+        <div className="border-t border-[#1e1e2e]" />
 
-          {/* Existing Demos */}
-          <section>
-            <h2 className="font-heading text-xl font-bold text-foreground mb-4">
-              Existing Demos
-            </h2>
-            <DemoList />
-          </section>
-        </main>
-      </div>
+        {/* Existing Demos */}
+        <section>
+          <p className="font-[family-name:var(--font-jetbrains)] text-[0.7rem] uppercase tracking-[0.1em] text-amber-500 mb-4">
+            Existing Demos
+          </p>
+          <DemoList />
+        </section>
+      </main>
     </div>
   );
 }

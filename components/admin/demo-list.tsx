@@ -60,20 +60,26 @@ export function DemoList() {
 
   if (loading) {
     return (
-      <div className="text-slate-400 text-sm py-4">Loading demos...</div>
+      <p className="font-[family-name:var(--font-jetbrains)] text-[#6b6b7b] text-xs uppercase tracking-wider py-4">
+        Loading...
+      </p>
     );
   }
 
   if (error) {
     return (
-      <div className="text-red-400 text-sm py-4">{error}</div>
+      <p className="font-[family-name:var(--font-jetbrains)] text-red-500 text-xs uppercase tracking-wider py-4">
+        {error}
+      </p>
     );
   }
 
   if (demos.length === 0) {
     return (
-      <div className="bg-slate-800/30 border border-slate-700 rounded-xl p-8 text-center">
-        <p className="text-slate-400 text-sm">No demos created yet</p>
+      <div className="border border-[#1e1e2e] p-8 text-center">
+        <p className="font-[family-name:var(--font-jetbrains)] text-[#6b6b7b] text-sm">
+          No demos created yet
+        </p>
       </div>
     );
   }
@@ -83,15 +89,17 @@ export function DemoList() {
       {demos.map((demo) => (
         <div
           key={demo.slug}
-          className="bg-slate-800/50 border border-slate-700 rounded-xl p-4"
+          className="bg-[#12121a] border border-[#1e1e2e] p-4"
         >
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-white font-bold truncate">{demo.businessName}</p>
-              <p className="text-slate-400 text-sm mt-0.5">
-                {demo.suburb} · Created {formatDate(demo.createdAt)}
+              <p className="font-[family-name:var(--font-jetbrains)] font-semibold text-[#e8e8ed] truncate">
+                {demo.businessName}
               </p>
-              <p className="text-slate-500 text-xs mt-1 font-mono truncate">
+              <p className="font-[family-name:var(--font-jetbrains)] text-[0.65rem] text-[#6b6b7b] uppercase tracking-wider mt-1">
+                {demo.suburb} · {formatDate(demo.createdAt)}
+              </p>
+              <p className="font-[family-name:var(--font-jetbrains)] text-[0.65rem] text-[#3a3a4e] mt-0.5 truncate">
                 /demo/{demo.slug}
               </p>
             </div>
@@ -100,21 +108,21 @@ export function DemoList() {
                 href={`/demo/${demo.slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-300 hover:text-white text-sm px-3 py-1.5 border border-slate-600 hover:border-slate-500 rounded-lg transition-colors"
+                className="font-[family-name:var(--font-jetbrains)] text-amber-500 hover:text-amber-400 text-xs uppercase tracking-wider px-3 py-1.5 border border-[#1e1e2e] hover:border-amber-500/50 transition-colors"
               >
                 Open
               </a>
               <button
                 type="button"
                 onClick={() => copyUrl(demo.slug)}
-                className="text-slate-300 hover:text-white text-sm px-3 py-1.5 border border-slate-600 hover:border-slate-500 rounded-lg transition-colors"
+                className="font-[family-name:var(--font-jetbrains)] text-[#6b6b7b] hover:text-[#e8e8ed] text-xs uppercase tracking-wider px-3 py-1.5 border border-[#1e1e2e] hover:border-[#2e2e3e] transition-colors"
               >
-                Copy URL
+                Copy
               </button>
               <button
                 type="button"
                 onClick={() => handleDelete(demo.slug)}
-                className="text-red-400 hover:text-red-300 text-sm px-3 py-1.5 border border-red-800/50 hover:border-red-700 rounded-lg transition-colors"
+                className="font-[family-name:var(--font-jetbrains)] text-red-500 hover:text-red-400 text-xs uppercase tracking-wider px-3 py-1.5 border border-red-900/40 hover:border-red-500/50 transition-colors"
               >
                 Delete
               </button>
