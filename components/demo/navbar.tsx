@@ -8,6 +8,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetClose,
 } from "@/components/ui/sheet"
 import { DemoConfig } from "@/lib/types"
 
@@ -83,29 +84,25 @@ export function Navbar({ config }: { config: DemoConfig }) {
             </SheetHeader>
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-base font-medium text-slate-700 hover:text-navy-900 transition-colors py-1"
-                >
-                  {link.label}
-                </a>
+                <SheetClose key={link.href} render={<a href={link.href} />}>
+                  <span className="text-base font-medium text-slate-700 hover:text-navy-900 transition-colors py-1">
+                    {link.label}
+                  </span>
+                </SheetClose>
               ))}
               <div className="border-t border-slate-100 pt-4 mt-2 flex flex-col gap-3">
-                <a
-                  href={`tel:${config.phone}`}
-                  className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg text-sm transition-colors"
-                >
-                  <Phone size={16} />
-                  Call Now
-                </a>
-                <a
-                  href="#quote"
-                  className="flex items-center justify-center gap-2 bg-accent-amber hover:bg-accent-amber-hover text-white font-bold py-3 rounded-lg text-sm transition-colors"
-                >
-                  <FileText size={16} />
-                  Get a Quote
-                </a>
+                <SheetClose render={<a href={`tel:${config.phone}`} />}>
+                  <span className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg text-sm transition-colors">
+                    <Phone size={16} />
+                    Call Now
+                  </span>
+                </SheetClose>
+                <SheetClose render={<a href="#quote" />}>
+                  <span className="flex items-center justify-center gap-2 bg-accent-amber hover:bg-accent-amber-hover text-white font-bold py-3 rounded-lg text-sm transition-colors">
+                    <FileText size={16} />
+                    Get a Quote
+                  </span>
+                </SheetClose>
               </div>
             </div>
           </SheetContent>

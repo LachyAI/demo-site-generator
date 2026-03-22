@@ -10,7 +10,7 @@ export function ChatWidget({ config }: { config: DemoConfig }) {
   const initial = ownerName.charAt(0).toUpperCase()
 
   return (
-    <div className="fixed bottom-6 right-6 z-40">
+    <div className="fixed bottom-20 md:bottom-6 right-6 z-40">
       {/* Chat panel */}
       {open && (
         <div className="mb-4 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
