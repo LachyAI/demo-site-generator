@@ -20,7 +20,7 @@ export function Hero({ config }: { config: DemoConfig }) {
       <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-navy-800/50 rounded-full blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
           {/* Left column — text content */}
           <div className="text-left">
             {/* Trust pill */}
@@ -78,12 +78,12 @@ export function Hero({ config }: { config: DemoConfig }) {
 
           {/* Right column — hero image (mobile: above text) */}
           <div className="order-first lg:order-last">
-            <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[3/4]">
+            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-h-[280px] lg:max-h-[500px]">
               {!imgError ? (
                 <img
                   src="https://cdn.opscorescale.com/demo-images/hero-1.jpg"
                   alt="Professional handyman at work"
-                  className="w-full h-full object-cover object-[center_30%]"
+                  className="w-full h-full object-cover object-top"
                   onError={() => setImgError(true)}
                 />
               ) : (
