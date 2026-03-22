@@ -20,7 +20,7 @@ export function Hero({ config }: { config: DemoConfig }) {
       <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-navy-800/50 rounded-full blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
           {/* Left column — text content */}
           <div className="text-left">
             {/* Trust pill */}
