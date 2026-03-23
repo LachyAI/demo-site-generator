@@ -9,38 +9,103 @@ interface ReviewParserProps {
 }
 
 function parseReviews(raw: string): Review[] {
-  const blocks = raw.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
   const parsed: Review[] = [];
 
-  for (const block of blocks) {
-    const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
-    if (lines.length < 2) continue;
+  // Strategy 1: Try splitting by rating lines (e.g. "5", "★★★★★", "5 stars")
+  // This handles Google review paste format like:
+  // 5\nMar 12, 2026\nReview text...\nAB\nName Name\n247\n5\n...
+  const ratingPattern = /^[1-5]$/;
+  const starPattern = /^[★]{1,5}$/;
+  const datePattern = /^(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+\d/i;
+  const junkPattern = /^\d{2,3}$/; // "247" etc — Google review metadata
 
-    const name = lines[0];
+  const lines = raw.split("\n").map((l) => l.trim());
 
-    let rating = 5;
-    let textStart = 1;
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
 
-    const starLine = lines[1];
-    const starCount = (starLine.match(/★/g) || []).length;
-    if (starCount > 0) {
-      rating = starCount;
-      textStart = 2;
-    } else {
-      const numMatch = starLine.match(/(\d)[\/\s]?(?:out of\s*)?(?:\d\s*)?(?:stars?|\/5)?/i);
-      if (numMatch) {
-        const n = parseInt(numMatch[1]);
-        if (n >= 1 && n <= 5) {
-          rating = n;
-          textStart = 2;
-        }
-      }
+    // Detect a rating line (start of a review block)
+    let rating = 0;
+    if (ratingPattern.test(line)) {
+      rating = parseInt(line);
+    } else if (starPattern.test(line)) {
+      rating = (line.match(/★/g) || []).length;
     }
 
-    const text = lines.slice(textStart).join(" ").trim();
-    if (!text || !name) continue;
+    if (rating >= 1 && rating <= 5) {
+      // Scan forward to collect: skip date, collect review text, skip junk, find name
+      i++;
+      // Skip date line if present
+      if (i < lines.length && datePattern.test(lines[i])) i++;
 
-    parsed.push({ name, rating, text });
+      // Collect review text lines (everything until we hit initials/name/junk/next rating)
+      const textLines: string[] = [];
+      while (i < lines.length) {
+        const l = lines[i];
+        if (!l) { i++; continue; }
+        // Stop if this looks like a rating for next review
+        if (ratingPattern.test(l) || starPattern.test(l)) break;
+        // Stop if this is junk number like "247"
+        if (junkPattern.test(l)) { i++; continue; }
+        // Check if this is initials (1-3 uppercase chars) — likely reviewer initials, skip
+        if (/^[A-Z]{1,3}$/.test(l)) { i++; continue; }
+        // Check if next lines look like name + junk (end of this review)
+        // A name is typically 2-4 words, no numbers
+        if (textLines.length > 0 && /^[A-Za-z][a-z]+(?:\s+[A-Za-z][a-z]*)*$/.test(l) && l.split(/\s+/).length <= 4) {
+          // This is the reviewer name
+          const name = l;
+          i++;
+          // Skip trailing junk numbers
+          while (i < lines.length && (junkPattern.test(lines[i]) || !lines[i])) i++;
+          if (textLines.length > 0) {
+            parsed.push({ name, rating, text: textLines.join(" ") });
+          }
+          break;
+        }
+        // "More" link from Google
+        if (l === "More" || l === "... More") { i++; continue; }
+        textLines.push(l);
+        i++;
+      }
+      continue;
+    }
+
+    i++;
+  }
+
+  // Strategy 2: If strategy 1 found nothing, try simple double-newline blocks
+  if (parsed.length === 0) {
+    const blocks = raw.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
+    for (const block of blocks) {
+      const blines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+      if (blines.length === 0) continue;
+
+      // If only one line, treat entire block as review text with unknown name
+      if (blines.length === 1) {
+        parsed.push({ name: "Customer", rating: 5, text: blines[0] });
+        continue;
+      }
+
+      // First line = name, rest = text, default 5 stars
+      const name = blines[0];
+      let r = 5;
+      let tStart = 1;
+
+      // Check if second line is a rating
+      const secondLine = blines[1];
+      const sc = (secondLine.match(/★/g) || []).length;
+      if (sc > 0) { r = sc; tStart = 2; }
+      else if (ratingPattern.test(secondLine)) { r = parseInt(secondLine); tStart = 2; }
+
+      const text = blines.slice(tStart).join(" ").trim();
+      if (text) parsed.push({ name, rating: r, text });
+    }
+  }
+
+  // Strategy 3: If still nothing, treat the entire input as one review
+  if (parsed.length === 0 && raw.trim().length > 10) {
+    parsed.push({ name: "Customer", rating: 5, text: raw.trim() });
   }
 
   return parsed;
