@@ -59,6 +59,8 @@ export function DemoForm() {
 
   // Logo
   const [logoUrl, setLogoUrl] = useState("");
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoPreview, setLogoPreview] = useState("");
 
   // Stats
   const [statsJobs, setStatsJobs] = useState("500");
@@ -313,16 +315,55 @@ export function DemoForm() {
       <SectionCard title="Logo & Stats">
         <div className="space-y-4">
           <div>
-            <label className={labelClass}>Logo URL (optional)</label>
-            <input
-              type="url"
-              value={logoUrl}
-              onChange={(e) => setLogoUrl(e.target.value)}
-              className={inputClass}
-              placeholder="https://example.com/logo.png"
-            />
+            <label className={labelClass}>Logo (optional)</label>
+            <div className="flex items-center gap-4">
+              {logoPreview && (
+                <div className="w-12 h-12 border border-[#1e1e2e] flex items-center justify-center shrink-0 bg-[#0a0a0f]">
+                  <img src={logoPreview} alt="Logo preview" className="max-w-full max-h-full object-contain" />
+                </div>
+              )}
+              <div className="flex-1">
+                <label className="block cursor-pointer">
+                  <span className={`inline-block border border-[#1e1e2e] text-[#e8e8ed] font-[family-name:var(--font-jetbrains)] text-xs uppercase tracking-wider px-4 py-2 hover:border-amber-500 hover:text-amber-500 transition-colors ${logoUploading ? "opacity-50 pointer-events-none" : ""}`}>
+                    {logoUploading ? "Uploading..." : logoPreview ? "Change Logo" : "Upload Logo"}
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      setLogoUploading(true);
+                      setLogoPreview(URL.createObjectURL(file));
+                      try {
+                        const formData = new FormData();
+                        formData.append("file", file);
+                        const res = await fetch("/api/upload", { method: "POST", body: formData });
+                        const data = await res.json();
+                        if (data.url) {
+                          setLogoUrl(data.url);
+                        }
+                      } catch {
+                        setLogoPreview("");
+                      }
+                      setLogoUploading(false);
+                    }}
+                  />
+                </label>
+                {logoUrl && (
+                  <button
+                    type="button"
+                    onClick={() => { setLogoUrl(""); setLogoPreview(""); }}
+                    className="ml-3 text-red-500 font-[family-name:var(--font-jetbrains)] text-[0.6rem] uppercase tracking-wider hover:text-red-400"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
             <p className="text-[#3a3a4e] text-[0.6rem] font-[family-name:var(--font-jetbrains)] mt-1">
-              Paste a URL to the business logo. Leave empty to show business name as text.
+              Upload a logo image. Leave empty to show business name as text.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-4">
